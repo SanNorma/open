@@ -14,6 +14,11 @@ buildscript {
 plugins {
     id 'java'
     id 'org.springframework.boot' version '2.2.0.RELEASE'
+    id 'application'
+}
+
+application {
+    mainClassName = 'com.tradesystem.magic.MagicApplication'
 }
 
 apply plugin: 'java'

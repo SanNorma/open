@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: magic-trade
+  datasource:
+    url: jdbc:h2:mem:test
+  jpa:
+    hibernate:
+      show-sql: true
+      ddl-auto: create-drop
+  h2:
+    console:
+      enabled: true
+server:
+  port: 8080
+  servlet:
+    context-path: /api
+    compression:
+      enabled: true
+      mime-types: "text/html,text/xml,text/plain,text/css,text/javascript,application/javascript,application/json"
+      min-response-size: 1024
+  error:
+    include-exception: true

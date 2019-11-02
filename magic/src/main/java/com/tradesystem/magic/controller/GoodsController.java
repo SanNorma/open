@@ -9,6 +9,7 @@ import com.tradesystem.magic.service.GoodService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -51,5 +52,11 @@ public class GoodsController {
             UriComponentsBuilder uriComponentsBuilder) {
         Good updatedGood = goodService.updateGood(id, request);
         return ResponseEntity.ok(updatedGood);
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<Void> deleteGood(Long id) {
+        goodService.deleteById(id);
+        return ResponseEntity.ok().build();
     }
 }

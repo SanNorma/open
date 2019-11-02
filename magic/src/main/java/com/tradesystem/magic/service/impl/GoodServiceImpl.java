@@ -48,4 +48,8 @@ public class GoodServiceImpl implements GoodService {
         }
         return goodRepository.findById(id).orElseThrow(() -> new GoodNotFoundException(String.format("Good with id: '%s' not found", id)));
     }
+
+    public void deleteById(Long id) {
+        goodRepository.deleteById(id);
+    }
 }

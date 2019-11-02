@@ -13,4 +13,5 @@ public interface GoodService {
     List<Good> findAll();
     Long createGood(GoodRequest goodRequest);
     Good updateGood(Long id, GoodRequest request);
+    void deleteById(Long id);
 }

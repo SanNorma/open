@@ -39,7 +39,7 @@ class GoodsControllerTest {
     private static final long PRICE = 20L;
     private static final String DESCRIPTION = "Lorem ipsum";
     private static final long ID = 1L;
-    protected static final String DIFFERENT_DESCRIPTION = "Different Description";
+    private static final String DIFFERENT_DESCRIPTION = "Different Description";
 
     @Autowired
     private MockMvc mockMvc;

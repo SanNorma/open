@@ -11,6 +11,7 @@ import com.tradesystem.magic.service.GoodService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @Service
@@ -36,5 +37,15 @@ public class GoodServiceImpl implements GoodService {
             return goodRepository.findByName(good.getName()).getId();
         }
         return goodRepository.save(good).getId();
+    }
+
+    @Transactional
+    @Override
+    public Good updateGood(Long id, GoodRequest request) {
+        Good good = GoodConverter.toGood(request).setId(id);
+        if (goodRepository.existsById(id)) {
+            goodRepository.save(good);
+        }
+        return goodRepository.findById(id).orElseThrow(() -> new GoodNotFoundException(String.format("Good with id: '%s' not found", id)));
     }
 }

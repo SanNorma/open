@@ -1,14 +1,8 @@
 buildscript {
-    ext.kotlinVersion = '1.3.50'
     ext.swaggerVersion = "2.9.2"
     ext.javafakerVersion = "1.0.1"
     repositories {
         mavenCentral()
-    }
-    dependencies {
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
-        classpath "org.jetbrains.kotlin:kotlin-allopen:$kotlinVersion"
-        classpath "org.jetbrains.kotlin:kotlin-noarg:$kotlinVersion"
     }
 }
 plugins {
@@ -17,10 +11,6 @@ plugins {
 }
 
 apply plugin: 'java'
-apply plugin: 'kotlin'
-apply plugin: 'kotlin-spring'
-apply plugin: "kotlin-jpa"
-apply plugin: "kotlin-allopen"
 apply plugin: 'io.spring.dependency-management'
 
 group = 'com.tradesystem'
@@ -39,11 +29,6 @@ dependencies {
     //swagger
     implementation "io.springfox:springfox-swagger2:${swaggerVersion}"
     implementation "io.springfox:springfox-swagger-ui:${swaggerVersion}"
-
-    //kotlin
-    compile 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
-    compile 'org.jetbrains.kotlin:kotlin-reflect'
-    compile 'com.fasterxml.jackson.module:jackson-module-kotlin'
 
     //lombok
     implementation "org.projectlombok:lombok"
@@ -64,20 +49,4 @@ dependencies {
 
 test {
     useJUnitPlatform()
-}
-compileKotlin {
-    kotlinOptions {
-        jvmTarget = "12"
-    }
-}
-compileTestKotlin {
-    kotlinOptions {
-        jvmTarget = "12"
-    }
-}
-
-allOpen {
-    annotation("javax.persistence.Entity")
-    annotation("javax.persistence.MappedSuperclass")
-    annotation("javax.persistence.Embeddable")
 }

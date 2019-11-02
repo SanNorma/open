@@ -21,9 +21,11 @@ import org.springframework.test.web.servlet.MockMvc;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
+import static org.mockito.Mockito.eq;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -37,6 +39,7 @@ class GoodsControllerTest {
     private static final long PRICE = 20L;
     private static final String DESCRIPTION = "Lorem ipsum";
     private static final long ID = 1L;
+    protected static final String DIFFERENT_DESCRIPTION = "Different Description";
 
     @Autowired
     private MockMvc mockMvc;
@@ -96,6 +99,46 @@ class GoodsControllerTest {
     void return404_whenCalledGetBook_ifNotFound() throws Exception {
         when(goodService.findById(42L)).thenThrow(new GoodNotFoundException("Good with id: '42' not found"));
         mockMvc.perform(get("/good/42")).andExpect(status().isNotFound());
+    }
+
+    @Test
+    void update_whenPutNewDataIntoAnExistingEntity() throws Exception {
+        GoodRequest request = GoodRequest.builder()
+                .name(NAME)
+                .price(PRICE)
+                .description(DIFFERENT_DESCRIPTION)
+                .build();
+        when(goodService.updateGood(eq(1L), argumentCaptor.capture())).thenReturn(createGood(ID,
+                NAME,
+                PRICE,
+                DIFFERENT_DESCRIPTION));
+
+        mockMvc.perform(put("/good/1").contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(request)))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.id", is(1)))
+                .andExpect(jsonPath("$.name", is(NAME)))
+                .andExpect(jsonPath("$.price", is(20)))
+                .andExpect(jsonPath("$.description", is(DIFFERENT_DESCRIPTION)));
+
+        assertThat(argumentCaptor.getValue().getName(), is(NAME));
+        assertThat(argumentCaptor.getValue().getPrice(), is(PRICE));
+        assertThat(argumentCaptor.getValue().getDescription(), is(DIFFERENT_DESCRIPTION));
+    }
+
+    @Test
+    void update_whenTryingPutNewDataIntoNotExistingEntity() throws Exception {
+        GoodRequest request = GoodRequest.builder()
+                .name(NAME)
+                .price(PRICE)
+                .description("Different Description")
+                .build();
+        when(goodService.updateGood(eq(42L), argumentCaptor.capture())).thenThrow(new GoodNotFoundException(
+                "Good with id: '42' not found"));
+
+        mockMvc.perform(put("/book/42").contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(request))).andExpect(status().isNotFound());
     }
 
     private Good createGood(long id, String name, long price, String description) {

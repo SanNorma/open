@@ -12,4 +12,5 @@ public interface GoodService {
     Good findById(Long id) throws NotFoundException;
     List<Good> findAll();
     Long createGood(GoodRequest goodRequest);
+    Good updateGood(Long id, GoodRequest request);
 }

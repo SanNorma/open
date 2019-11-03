@@ -37,6 +37,8 @@ dependencies {
 
     //database
     runtime "com.h2database:h2"
+    compile group: 'org.hibernate', name: 'hibernate-envers', version: '5.4.8.Final'
+
 
     //fake data
     implementation "com.github.javafaker:javafaker:${javafakerVersion}"

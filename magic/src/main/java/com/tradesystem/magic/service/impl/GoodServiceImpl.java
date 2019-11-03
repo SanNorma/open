@@ -2,7 +2,7 @@ package com.tradesystem.magic.service.impl;
 
 import java.util.List;
 
-import com.tradesystem.magic.converter.GoodConverter;
+import com.tradesystem.magic.converter.Converter;
 import com.tradesystem.magic.domain.Good;
 import com.tradesystem.magic.dto.GoodRequest;
 import com.tradesystem.magic.exception.GoodNotFoundException;
@@ -32,7 +32,7 @@ public class GoodServiceImpl implements GoodService {
 
     @Override
     public Long createGood(GoodRequest goodRequest) {
-        Good good = GoodConverter.toGood(goodRequest);
+        Good good = Converter.toGood(goodRequest);
         if (goodRepository.existsByName(good.getName())) {
             return goodRepository.findByName(good.getName()).getId();
         }
@@ -42,7 +42,7 @@ public class GoodServiceImpl implements GoodService {
     @Transactional
     @Override
     public Good updateGood(Long id, GoodRequest request) {
-        Good good = GoodConverter.toGood(request).setId(id);
+        Good good = Converter.toGood(request).setId(id);
         if (goodRepository.existsById(id)) {
             goodRepository.save(good);
         }

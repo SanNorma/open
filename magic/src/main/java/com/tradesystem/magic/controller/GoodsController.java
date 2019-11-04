@@ -35,22 +35,22 @@ public class GoodsController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Good> getGoodById(@PathVariable Long id) throws NotFoundException {
-        Good foundGood = goodService.findById(id);
+        var foundGood = goodService.findById(id);
         return ResponseEntity.ok(foundGood);
     }
 
     @PostMapping
     public ResponseEntity<Void> createGood(@Valid @RequestBody GoodRequest request,
             UriComponentsBuilder uriComponentsBuilder) {
-        Long createdGoodId = goodService.createGood(request);
-        UriComponents uriComponents = uriComponentsBuilder.path(PATH + "/{id}").buildAndExpand(createdGoodId);
+        var createdGoodId = goodService.createGood(request);
+        var uriComponents = uriComponentsBuilder.path(PATH + "/{id}").buildAndExpand(createdGoodId);
         return ResponseEntity.created(uriComponents.toUri()).build();
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Good> updateGood(@Valid @RequestBody GoodRequest request, @PathVariable Long id,
             UriComponentsBuilder uriComponentsBuilder) {
-        Good updatedGood = goodService.updateGood(id, request);
+        var updatedGood = goodService.updateGood(id, request);
         return ResponseEntity.ok(updatedGood);
     }
 

@@ -32,7 +32,7 @@ public class GoodServiceImpl implements GoodService {
 
     @Override
     public Long createGood(GoodRequest goodRequest) {
-        Good good = Converter.toGood(goodRequest);
+        var good = Converter.toGood(goodRequest);
         if (goodRepository.existsByName(good.getName())) {
             return goodRepository.findByName(good.getName()).getId();
         }
@@ -42,7 +42,7 @@ public class GoodServiceImpl implements GoodService {
     @Transactional
     @Override
     public Good updateGood(Long id, GoodRequest request) {
-        Good good = Converter.toGood(request).setId(id);
+        var good = Converter.toGood(request).setId(id);
         if (goodRepository.existsById(id)) {
             goodRepository.save(good);
         }

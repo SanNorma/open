@@ -20,13 +20,13 @@ public class MagicInitializer implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        Faker faker = new Faker();
+        var faker = new Faker();
         log.info("Here's a fun fact I wanna tell ya... \n {}", faker.chuckNorris().fact());
 
         log.info("Goods initialization has been started...");
 
         IntStream.range(0, INITIAL_GOODS_QUANTITY).forEach(i -> {
-            Good good = new Good();
+            var good = new Good();
             good.setName(faker.funnyName().name())
                     .setPrice((long) faker.number().randomDigitNotZero())
                     .setDescription(faker.lebowski().quote());

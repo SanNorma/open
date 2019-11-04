@@ -10,6 +10,8 @@ spring:
   h2:
     console:
       enabled: true
+  jmx:
+    enabled: true
 server:
   port: 8080
   servlet:
@@ -20,3 +22,9 @@ server:
       min-response-size: 1024
   error:
     include-exception: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

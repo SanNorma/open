@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.tradesystem.magic.converter.Converter;
 import com.tradesystem.magic.domain.Good;
+import com.tradesystem.magic.domain.projection.NamesDescriptions;
 import com.tradesystem.magic.dto.GoodRequest;
 import com.tradesystem.magic.exception.GoodNotFoundException;
 import com.tradesystem.magic.repository.GoodRepository;
@@ -23,6 +24,11 @@ public class GoodServiceImpl implements GoodService {
     public Good findById(Long id) throws NotFoundException {
         return goodRepository.findById(id)
                 .orElseThrow(() -> new GoodNotFoundException(String.format("Good with id: '%s' not found", id)));
+    }
+
+    @Override
+    public NamesDescriptions findNameDescriptionById(Long id) {
+        return goodRepository.findNameDescriptionById(id);
     }
 
     @Override
@@ -46,7 +52,8 @@ public class GoodServiceImpl implements GoodService {
         if (goodRepository.existsById(id)) {
             goodRepository.save(good);
         }
-        return goodRepository.findById(id).orElseThrow(() -> new GoodNotFoundException(String.format("Good with id: '%s' not found", id)));
+        return goodRepository.findById(id)
+                .orElseThrow(() -> new GoodNotFoundException(String.format("Good with id: '%s' not found", id)));
     }
 
     public void deleteById(Long id) {

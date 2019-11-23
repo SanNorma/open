@@ -4,6 +4,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import com.tradesystem.magic.domain.Good;
+import com.tradesystem.magic.domain.projection.NamesDescriptions;
 import com.tradesystem.magic.dto.GoodRequest;
 import com.tradesystem.magic.service.GoodService;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +18,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @RequiredArgsConstructor
@@ -33,10 +33,16 @@ public class GoodsController {
         return ResponseEntity.ok(goodService.findAll());
     }
 
-    @GetMapping("/{id}")
+    @GetMapping
     public ResponseEntity<Good> getGoodById(@PathVariable Long id) throws NotFoundException {
         var foundGood = goodService.findById(id);
         return ResponseEntity.ok(foundGood);
+    }
+
+    @GetMapping
+    public ResponseEntity<NamesDescriptions> getNamesDescriptionsById(@PathVariable Long id) {
+        var nameDescription = goodService.findNameDescriptionById(id);
+        return ResponseEntity.ok(nameDescription);
     }
 
     @PostMapping
@@ -54,9 +60,14 @@ public class GoodsController {
         return ResponseEntity.ok(updatedGood);
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteGood(Long id) {
         goodService.deleteById(id);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<String> getAll() {
+        return ResponseEntity.ok("All");
     }
 }

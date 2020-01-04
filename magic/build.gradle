@@ -39,6 +39,10 @@ dependencies {
     runtime "com.h2database:h2"
     compile group: 'ma.glasnost.orika', name: 'orika-core', version: '1.5.4'
 
+    //kafka
+    // https://mvnrepository.com/artifact/org.apache.kafka/kafka-clients
+    compile group: 'org.apache.kafka', name: 'kafka-clients', version: '2.4.0'
+
     //fake data
     implementation "com.github.javafaker:javafaker:${javafakerVersion}"
 

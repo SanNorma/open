@@ -33,13 +33,13 @@ public class GoodsController {
         return ResponseEntity.ok(goodService.findAll());
     }
 
-    @GetMapping
+    @GetMapping("/{id}")
     public ResponseEntity<Good> getGoodById(@PathVariable Long id) throws NotFoundException {
         var foundGood = goodService.findById(id);
         return ResponseEntity.ok(foundGood);
     }
 
-    @GetMapping
+    @GetMapping("/{id}/desc")
     public ResponseEntity<NamesDescriptions> getNamesDescriptionsById(@PathVariable Long id) {
         var nameDescription = goodService.findNameDescriptionById(id);
         return ResponseEntity.ok(nameDescription);
@@ -54,14 +54,13 @@ public class GoodsController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Good> updateGood(@Valid @RequestBody GoodRequest request, @PathVariable Long id,
-            UriComponentsBuilder uriComponentsBuilder) {
+    public ResponseEntity<Good> updateGood(@Valid @RequestBody GoodRequest request, @PathVariable Long id) {
         var updatedGood = goodService.updateGood(id, request);
         return ResponseEntity.ok(updatedGood);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteGood(Long id) {
+    public ResponseEntity<Void> deleteGood(@PathVariable Long id) {
         goodService.deleteById(id);
         return ResponseEntity.ok().build();
     }

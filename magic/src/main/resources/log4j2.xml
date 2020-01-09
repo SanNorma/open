@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="info" name="spring-boot-kafka-log" packages="com.tradesystem.magic">
+  <Appenders>
+    <Kafka name="Kafka" topic="tradeSystem">
+      <PatternLayout pattern="%date %message"/>
+      <Property name="bootstrap.servers">localhost:9092</Property>
+    </Kafka>
+    <Async name="Async">
+      <AppenderRef ref="Kafka"/>
+    </Async>
+    <Console name="stdout" target="SYSTEM_OUT">
+      <PatternLayout
+        pattern="%style{%d{ISO8601}}{black} %highlight{%-5level }[%style{%t}{bright,blue}] %style{%C{1.}}{bright,yellow}: %msg%n%throwable" />
+    </Console>
+
+  </Appenders>
+  <Loggers>
+    <Root level="INFO">
+      <AppenderRef ref="Kafka"/>
+      <AppenderRef ref="stdout"/>
+    </Root>
+    <Logger name="org.apache.kafka" level="INFO" />
+  </Loggers>
+</Configuration>

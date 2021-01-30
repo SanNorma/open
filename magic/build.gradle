@@ -1,13 +1,11 @@
 buildscript {
-    ext.swaggerVersion = "2.9.2"
-    ext.javafakerVersion = "1.0.1"
     repositories {
         mavenCentral()
     }
 }
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '2.2.0.RELEASE'
+    id 'org.springframework.boot' version '2.3.6.RELEASE'
 }
 
 apply plugin: 'java'
@@ -20,15 +18,21 @@ repositories {
     mavenCentral()
 }
 
+ext {
+    openAPIVersion = "1.5.3"
+    javafakerVersion = "1.0.1"
+    orikaVersion = '1.5.4'
+}
+
 dependencies {
     //spring
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
 
     //swagger
-    implementation "io.springfox:springfox-swagger2:${swaggerVersion}"
-    implementation "io.springfox:springfox-swagger-ui:${swaggerVersion}"
+    implementation "org.springdoc:springdoc-openapi-ui:${openAPIVersion}"
 
     //lombok
     implementation "org.projectlombok:lombok"
@@ -37,13 +41,12 @@ dependencies {
 
     //database
     runtime "com.h2database:h2"
-    compile group: 'ma.glasnost.orika', name: 'orika-core', version: '1.5.4'
+    compile group: 'ma.glasnost.orika', name: 'orika-core', version: orikaVersion
 
     //fake data
     implementation "com.github.javafaker:javafaker:${javafakerVersion}"
 
     //test
-    testCompile group: 'junit', name: 'junit', version: '4.12'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
 }

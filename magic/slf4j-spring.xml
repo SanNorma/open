@@ -30,8 +30,8 @@
       <AppenderRef ref="RollingFile" />
     </Root>
 
-    <!-- LOG "com.baeldung*" at TRACE level -->
-    <Logger name="com.baeldung" level="trace"></Logger>
+    <!-- LOG "com.tradesystem*" at INFO level -->
+    <Logger name="com.tradesystem" level="info"/>
   </Loggers>
 
 </Configuration>
